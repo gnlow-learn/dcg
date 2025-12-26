@@ -1,13 +1,4 @@
 :- use_module(library(dcgs)).
-:- use_module(library(lists)).
-
-ko_to_en(KoStr, EnStr) :-
-    phrase(ko_sentence(IR), KoStr),
-    phrase(en_sentence(IR), EnStr).
-
-en_to_ko(EnStr, KoStr) :-
-    phrase(en_sentence(IR), EnStr),
-    phrase(ko_sentence(IR), KoStr).
 
 ko_sentence(s(decl, active, past, pred(V, agent(Subj, det(none)), obj(Obj, det(none))))) -->
     noun_ko(Subj), " 가 ", 
@@ -29,6 +20,7 @@ article(a) --> "a".
 article(a) --> "A".
 article(the) --> "the".
 article(the) --> "The".
+article(none) --> "".
 
 noun_en(butterfly) --> "butterfly".
 noun_en(flower)    --> "flower".

@@ -1,0 +1,17 @@
+{
+    "permissions": {
+        "default": {
+            "import": ["esm.sh"],
+            "read": ["."]
+        }
+    },
+    "lint": {
+        "rules": {
+            "exclude": [
+                "no-import-prefix"
+            ]
+        }
+    },
+    "unstable": ["raw-imports"],
+    "lock": false
+}
