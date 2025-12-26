@@ -1,3 +1,5 @@
+:- use_module(romanize).
+
 :- use_module(library(dcgs)).
 
 % === kr ===

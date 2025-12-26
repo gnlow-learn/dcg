@@ -1,10 +1,11 @@
-import { run } from "./src/run.ts"
+import { use, run } from "./src/run.ts"
+
+use("romanize.pl")
 
 await Array.fromAsync(run
-    (await Deno.readTextFile("sketch/a.pl"))
+    (await Deno.readTextFile("sketch/main.pl"))
     (`
-        phrase(sentence(_, IR), "나비가 꽃을 보았다"),
-        phrase(sentence(_, IR), Res).
+        romanize("메르", Res).
     `)
 ).then(x => {
     console.log(
