@@ -1,7 +1,10 @@
 :- use_module(library(dcgs)).
 
-char_upper(L, U) :-
-    once((char_code(L, C), C >= 97, C =< 122, U_code is C - 32, char_code(U, U_code); U = L)).
+has_jongseong(Str) :-
+    last(Str, LastChar),
+    char_code(LastChar, Code),
+    Code >= 44032, Code =< 55203,
+    (Code - 44032) mod 28 > 0.
 
 % ===
 
@@ -20,19 +23,23 @@ sentence_ko_osv(s(decl, active, past, pred(V, agent(S, SD), obj(O, OD)))) -->
 
 noun_phrase(ko, N, _, JosaType) -->
     noun(ko, N),
-    josa(N, JosaType).
+    { phrase(noun(ko, N), NStr) },
+    josa(NStr, JosaType).
 
 noun(ko, butterfly) --> "나비".
 noun(ko, flower)    --> "꽃".
 
 verb(ko, see, past) --> "보았다".
 
-josa(butterfly, josa_subj) --> "가".
-josa(flower, josa_subj)    --> "이".
-josa(butterfly, josa_obj)  --> "를".
-josa(flower, josa_obj)     --> "을".
+josa(NStr, josa_subj) --> { has_jongseong(NStr) }, !, "이".
+josa(_, josa_subj)    --> "가".
+josa(NStr, josa_obj)  --> { has_jongseong(NStr) }, !, "을".
+josa(_, josa_obj)     --> "를".
 
 % ===
+
+char_upper(L, U) :-
+    once((char_code(L, C), C >= 97, C =< 122, U_code is C - 32, char_code(U, U_code); U = L)).
 
 sentence(en, IR) -->
     { var(IR) }, !,
