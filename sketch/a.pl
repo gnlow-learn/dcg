@@ -1,11 +1,11 @@
 :- use_module(library(dcgs)).
 
-ko_sentence(s(decl, active, past, pred(V, agent(Subj, det(SubjDet)), obj(Obj, det(ObjDet))))) -->
+sentence(ko, s(decl, active, past, pred(V, agent(Subj, det(SubjDet)), obj(Obj, det(ObjDet))))) -->
     article(ko, SubjDet), noun(ko, Subj), " 가 ", 
     article(ko, ObjDet), noun(ko, Obj), " 을 ", 
     verb(ko, V, past).
 
-en_sentence(s(decl, active, past, pred(V, agent(Subj, det(SubjDet)), obj(Obj, det(ObjDet))))) -->
+sentence(en, s(decl, active, past, pred(V, agent(Subj, det(SubjDet)), obj(Obj, det(ObjDet))))) -->
     article(en, SubjDet), " ", noun(en, Subj), " ",
     verb(en, V, past), " ",
     article(en, ObjDet), " ", noun(en, Obj).
