@@ -1,29 +1,31 @@
 :- use_module(library(dcgs)).
 
-ko_sentence(s(decl, active, past, pred(V, agent(Subj, det(none)), obj(Obj, det(none))))) -->
-    noun_ko(Subj), " 가 ", 
-    noun_ko(Obj), " 을 ", 
-    verb_ko(V, past).
-
-noun_ko(butterfly) --> "나비".
-noun_ko(flower)    --> "꽃".
-
-verb_ko(see, past) --> "보았다".
-verb_ko(see, pres) --> "본다".
+ko_sentence(s(decl, active, past, pred(V, agent(Subj, det(SubjDet)), obj(Obj, det(ObjDet))))) -->
+    article(ko, SubjDet), noun(ko, Subj), " 가 ", 
+    article(ko, ObjDet), noun(ko, Obj), " 을 ", 
+    verb(ko, V, past).
 
 en_sentence(s(decl, active, past, pred(V, agent(Subj, det(SubjDet)), obj(Obj, det(ObjDet))))) -->
-    article(SubjDet), " ", noun_en(Subj), " ",
-    verb_en(V, past), " ",
-    article(ObjDet), " ", noun_en(Obj).
+    article(en, SubjDet), " ", noun(en, Subj), " ",
+    verb(en, V, past), " ",
+    article(en, ObjDet), " ", noun(en, Obj).
 
-article(a) --> "a".
-article(a) --> "A".
-article(the) --> "the".
-article(the) --> "The".
-article(none) --> "".
+noun(ko, butterfly) --> "나비".
+noun(ko, flower)    --> "꽃".
 
-noun_en(butterfly) --> "butterfly".
-noun_en(flower)    --> "flower".
+noun(en, butterfly) --> "butterfly".
+noun(en, flower)    --> "flower".
 
-verb_en(see, past) --> "saw".
-verb_en(see, pres) --> "sees".
+verb(ko, see, past) --> "보았다".
+verb(ko, see, pres) --> "본다".
+
+verb(en, see, past) --> "saw".
+verb(en, see, pres) --> "sees".
+
+article(ko, none) --> "".
+
+article(en, a) --> "a".
+article(en, a) --> "A".
+article(en, the) --> "the".
+article(en, the) --> "The".
+article(en, none) --> "a".
