@@ -22,10 +22,8 @@ verb(ko, see, pres) --> "본다".
 verb(en, see, past) --> "saw".
 verb(en, see, pres) --> "sees".
 
-article(ko, none) --> "".
+article(ko, _) --> "".
 
 article(en, a) --> "a".
-article(en, a) --> "A".
 article(en, the) --> "the".
-article(en, the) --> "The".
 article(en, none) --> "a".
