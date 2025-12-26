@@ -5,7 +5,7 @@ use("romanize.pl")
 await Array.fromAsync(run
     (await Deno.readTextFile("sketch/main.pl"))
     (`
-        romanize("메르", Res).
+        romanize("멜트", Res).
     `)
 ).then(x => {
     console.log(

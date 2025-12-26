@@ -19,6 +19,20 @@ cho_map(9, "s").   % ㅅ
 cho_map(11, "").   % ㅇ
 cho_map(12, "j").  % ㅈ
 cho_map(14, "ch"). % ㅊ
+cho_map(15, "k").  % ㅋ
+cho_map(16, "t").  % ㅌ
+cho_map(17, "p").  % ㅍ
+cho_map(18, "h").  % ㅎ
+
+jong_map(1, "g").
+jong_map(4, "n").
+jong_map(7, "d").
+jong_map(8, "l").
+jong_map(16, "m").
+jong_map(17, "b").
+jong_map(19, "s").
+jong_map(21, "ng").
+jong_map(22, "j").
 
 translate([]) --> [].
 translate([C|Cs]) -->
@@ -28,10 +42,12 @@ translate([C|Cs]) -->
     { 
         Base is Code - 44032,
         ChoIdx is Base // 588,
-        JungIdx is (Base mod 588) // 28
+        JungIdx is (Base mod 588) // 28,
+        JongIdx is Base mod 28
     },
     emit(ChoIdx, cho_map),
     emit(JungIdx, vowel_map),
+    emit(JongIdx, jong_map),
     translate(Cs).
 translate([C|Cs]) --> [C], translate(Cs).
 
