@@ -1,6 +1,5 @@
 :- use_module(romanize).
 :- use_module(library(dcgs)).
-:- use_module(library(clpz)).
 
 % === kr ===
 
@@ -41,18 +40,20 @@ josa(_, josa_obj)     --> "를".
 % === en ===
 
 char_upper(L, U) :-
-    (   nonvar(L) -> char_code(L, LC)
-    ;   nonvar(U) -> char_code(U, UC)
-    ;   true
-    ),
-    (   (LC #>= 97, LC #=< 122, UC #= LC - 32)
-    ;   (UC #>= 65, UC #=< 90, LC #= UC + 32)
-    ;   (UC #= LC)
-    ),
-    label([LC, UC]),
+    nonvar(L),
+    !,
     char_code(L, LC),
+    (   LC >= 97, LC =< 122
+    ->  UC is LC - 32, char_code(U, UC)
+    ;   U = L
+    ).
+char_upper(L, U) :-
+    nonvar(U),
     char_code(U, UC),
-    !.
+    (   UC >= 65, UC =< 90
+    ->  LC is UC + 32, char_code(L, LC)
+    ;   L = U
+    ).
 
 sentence(en, IR) -->
     { var(IR) },
