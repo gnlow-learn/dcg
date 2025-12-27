@@ -1,4 +1,5 @@
-import { load, Prolog } from "./deps.ts"
+import { load, Prolog, Answer } from "./deps/trealla.ts"
+import { Toplevel } from "./deps/Toplevel.js"
 
 await load()
 
@@ -26,5 +27,13 @@ async function* (query: string) {
 
     await pl.consultText(consult)
 
-    yield* pl.query(query)
+    yield* pl.query(query, { format: new Toplevel() })
 }
+
+export const show =
+(answer: Answer) =>
+    answer.status == "success"
+        ? Object.entries(answer.answer)
+            .map(([k, v]) => `  ${k} = ${v}`)
+            .join("\n")
+        : answer.stdout

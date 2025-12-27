@@ -1,21 +1,16 @@
-import { use, run } from "./src/run.ts"
+import { use, run, show } from "./src/run.ts"
 
 use("romanize.pl")
 
-await Array.fromAsync(run
-    (await Deno.readTextFile("sketch/main.pl"))
-    (`
-        romanize(Res, "imelda"),
-        romanize("바람", Res2).
-        
-    `)
-).then(x => {
+const query = `
+    phrase(en_core(s(decl, active, past, pred(see, agent(butterfly, a), obj(flower, a)))), Ls).
+`
+
+const res = run(await Deno.readTextFile("sketch/main.pl"))(query)
+
+for await (const answer of res) {
+    console.log(`?- ${query}`)
     console.log(
-        JSON.stringify(x, void 0, 2)
-        // x.map(answer =>
-        //     answer.status == "success"
-        //         ? answer.answer.Res
-        //         : "<failure>"
-        // )
+        show(answer)
     )
-})
+}
