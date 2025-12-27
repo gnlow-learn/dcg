@@ -16,7 +16,7 @@ async function* (query: string) {
     const pl = new Prolog()
 
     for await (const entry of imports) {
-        console.log(`import: sketch/${entry}`)
+        // console.log(`import: sketch/${entry}`)
         
         // @ts-expect-error:
         pl.fs.open(`/${entry}`, { write: true, create: true })
