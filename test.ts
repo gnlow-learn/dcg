@@ -16,5 +16,6 @@ async (query: string) => {
 }
 
 await query(`
-    phrase(sentence(ko, IR), "나비가 꽃을 보았다").
+    phrase(sentence(_, IR), "A butterfly saw a flower"),
+    phrase(sentence(_, IR), Res).
 `)
