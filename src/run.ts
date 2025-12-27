@@ -1,5 +1,6 @@
 import { load, Prolog, Answer } from "./deps/trealla.ts"
 import { Toplevel } from "./deps/Toplevel.js"
+import { assertEquals } from "https://esm.sh/jsr/@std/assert@1.0.16"
 
 await load()
 
@@ -37,3 +38,26 @@ export const show =
             .map(([k, v]) => `  ${k} = ${v}`)
             .join("\n")
         : answer.stdout
+
+export const query =
+async (query: string, expected?: string) => {
+    const res = run(await Deno.readTextFile("sketch/main.pl"))(query)
+    console.log(`?- ${query}`)
+
+    const expectedList = expected?.trim()
+        .split("\n")
+        .map(x => x.trim())
+
+    let i = 0
+    for await (const answer of res) {
+        const res = show(answer)
+
+        console.log(res)
+
+        if (expected && expectedList?.at(i)) {
+            assertEquals(res, expectedList?.at(i))
+        }
+
+        i++
+    }
+}
