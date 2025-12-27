@@ -3,6 +3,11 @@
         "default": {
             "import": ["esm.sh"],
             "read": ["."]
+        },
+        "test": {
+            "import": ["esm.sh"],
+            "read": ["."],
+            "write": ["."]
         }
     },
     "lint": {
