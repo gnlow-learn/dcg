@@ -13,6 +13,13 @@ Deno.test("snapshot", async t => {
         phrase(sentence(_, IR), Res).
     `, a => assertSnapshot(t, a))
     await query(`
-        phrase(sentence(ko, _), Full, []), append("빨간 나비가 ", Rest, Full).
+        assertz((
+            get_next_word(Prefix, W) :-
+                phrase(sentence(ko, _), Full, []),
+                append(Prefix, Rest, Full),
+                ( append(WL, [' '|_], Rest) -> true ; WL = Rest ),
+                atom_chars(W, WL)
+        )),
+        get_next_word("빨간 나비가 ", W).
     `, a => assertSnapshot(t, a))
 })
