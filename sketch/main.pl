@@ -12,23 +12,29 @@ has_jongseong(Str) :-
 sentence(ko, s(D, V, A, Prop)) --> sentence_ko_sov(s(D, V, A, Prop)).
 sentence(ko, s(D, V, A, Prop)) --> sentence_ko_osv(s(D, V, A, Prop)).
 
-sentence_ko_sov(s(decl, active, past, pred(V, agent(S, SD), obj(O, OD)))) -->
-    noun_phrase(ko, S, SD, josa_subj), " ",
-    noun_phrase(ko, O, OD, josa_obj), " ",
+sentence_ko_sov(s(decl, active, past, pred(V, agent(S, SD, SA), obj(O, OD, OA)))) -->
+    noun_phrase(ko, S, SD, SA, josa_subj), " ",
+    noun_phrase(ko, O, OD, OA, josa_obj), " ",
     verb(ko, V, past).
 
-sentence_ko_osv(s(decl, active, past, pred(V, agent(S, SD), obj(O, OD)))) -->
-    noun_phrase(ko, O, OD, josa_obj), " ",
-    noun_phrase(ko, S, SD, josa_subj), " ",
+sentence_ko_osv(s(decl, active, past, pred(V, agent(S, SD, SA), obj(O, OD, OA)))) -->
+    noun_phrase(ko, O, OD, OA, josa_obj), " ",
+    noun_phrase(ko, S, SD, SA, josa_subj), " ",
     verb(ko, V, past).
 
-noun_phrase(ko, N, _, JosaType) -->
+noun_phrase(ko, N, _, Adj, JosaType) -->
+    (   adj(ko, Adj), " "
+    ;   { Adj = none }
+    ),
     noun(ko, N),
     { phrase(noun(ko, N), NStr) },
     josa(NStr, JosaType).
 
 noun(ko, butterfly) --> "나비".
 noun(ko, flower)    --> "꽃".
+
+adj(ko, beautiful)  --> "아름다운".
+adj(ko, red)        --> "빨간".
 
 verb(ko, see, past) --> "보았다".
 
@@ -67,15 +73,26 @@ sentence(en, IR) -->
     { char_upper(First, Upper) },
     [Upper], Rest.
 
-en_core(s(decl, active, T, pred(V, agent(S, SD), obj(O, OD)))) -->
+en_core(s(decl, active, T, pred(V, agent(S, SD, SA), obj(O, OD, OA)))) -->
     { var(SD) -> SD = a ; true },
     { var(OD) -> OD = a ; true },
-    article(en, SD), " ", noun(en, S), " ",
+    article(en, SD), " ", 
+    (   { SA \= none }, adj(en, SA), " "
+    ;   { SA = none }
+    ),
+    noun(en, S), " ",
     verb(en, V, T), " ",
-    article(en, OD), " ", noun(en, O).
+    article(en, OD), " ", 
+    (   { OA \= none }, adj(en, OA), " "
+    ;   { OA = none }
+    ),
+    noun(en, O).
 
 noun(en, butterfly) --> "butterfly".
 noun(en, flower)    --> "flower".
+
+adj(en, beautiful)  --> "beautiful".
+adj(en, red)        --> "red".
 
 verb(en, see, past) --> "saw".
 

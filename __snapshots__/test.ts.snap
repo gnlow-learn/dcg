@@ -1,10 +1,15 @@
 export const snapshot = {};
 
 snapshot[`snapshot 1`] = `
-'IR = s(decl,active,past,pred(see,agent(butterfly,a,_A),obj(flower,a,_B))), Res = "나비가 꽃을 보았다".
-IR = s(decl,active,past,pred(see,agent(butterfly,a,_A),obj(flower,a,_B))), Res = "꽃을 나비가 보았다".
-IR = s(decl,active,past,pred(see,agent(butterfly,a,_A),obj(flower,a,_B))), Res = "A butterfly saw a flower".
+'IR = s(decl,active,past,pred(see,agent(butterfly,a,none),obj(flower,a,none))), Res = "나비가 꽃을 보았다".
+IR = s(decl,active,past,pred(see,agent(butterfly,a,none),obj(flower,a,none))), Res = "꽃을 나비가 보았다".
+IR = s(decl,active,past,pred(see,agent(butterfly,a,none),obj(flower,a,none))), Res = "A butterfly saw a flower".
 false'
 `;
 
-snapshot[`snapshot 2`] = `"false"`;
+snapshot[`snapshot 2`] = `
+'IR = s(decl,active,past,pred(see,agent(butterfly,_A,red),obj(flower,_B,beautiful))), Res = "빨간 나비가 아름다운 꽃을 보았다".
+IR = s(decl,active,past,pred(see,agent(butterfly,_A,red),obj(flower,_B,beautiful))), Res = "아름다운 꽃을 빨간 나비가 보았다".
+IR = s(decl,active,past,pred(see,agent(butterfly,a,red),obj(flower,a,beautiful))), Res = "A red butterfly saw a beautiful flower".
+false'
+`;

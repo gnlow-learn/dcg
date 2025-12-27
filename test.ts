@@ -9,7 +9,7 @@ Deno.test("snapshot", async t => {
         phrase(sentence(_, IR), Res).
     `, a => assertSnapshot(t, a))
     await query(`
-        phrase(sentence(_, IR), "꽃이 나비를 보았다"),
+        phrase(sentence(_, IR), "빨간 나비가 아름다운 꽃을 보았다"),
         phrase(sentence(_, IR), Res).
     `, a => assertSnapshot(t, a))
 })
